@@ -22,10 +22,10 @@ data ScriptState = ScriptState { output   :: String
 -- blank, ScriptState. Otherwise, it is given the state as left by the previous
 -- command’s execution.
 runHashProgram :: CommandTable -> Either FilePath ScriptState -> [TLExpr] -> IO ScriptState
-runHashProgram cmds (Left wd) xs = runHashProgram cmds (ScriptState {output = "", wd = wd, vartable = M.empty}) xs
+runHashProgram cmds (Left wd') xs = runHashProgram cmds (Right ScriptState {output = "", wd = wd', vartable = M.empty}) xs
 
 -- Calculates the result of a top-level command execution
-runTopLevel :: CommandTable -> ScriptState -> TLExpr -> IO ScriptState
+-- runTopLevel :: CommandTable -> ScriptState -> TLExpr -> IO ScriptState
 -- The rest of the module should consist of similar functions, calling each
 -- other so that each expression is parsed by a lower-level function and the
 -- result can be used in a higher-level function. The Command table and state
