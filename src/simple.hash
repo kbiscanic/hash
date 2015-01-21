@@ -1,0 +1,2 @@
+$a = "don't panic"
+echo $a > "out.txt" + # append to out.txt

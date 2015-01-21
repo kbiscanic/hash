@@ -19,6 +19,9 @@ data Expr = Var String -- A named variable
         | Str String -- A mere
         deriving (Eq, Show)
 
+exToStr :: Expr -> String
+exToStr (Var s) = s
+exToStr (Str s) = s
 
 -- A comparison operation
 data Comp = CEQ Expr Expr -- ==
