@@ -1,7 +1,7 @@
 module Main where
 
-import Hash
-import System.Environment
+import           Hash
+import           System.Environment
 
 main :: IO ()
 main = do

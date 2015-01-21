@@ -11,7 +11,6 @@ import           Network
 import           Numeric               (showHex)
 import           System.Directory
 import           System.IO
-import           System.Win32.File
 
 -- A map of (command name, command pairs), used to abstract command
 -- execution and make adding new commands relatively easy
@@ -19,7 +18,7 @@ commands :: M.Map String Command
 commands = M.fromList [("echo", cmdEcho), ("mv", cmdMv), ("cp", cmdCp), ("rm", cmdRm),
   ("create", cmdCreate), ("rndir", cmdRnDir), ("cpdir", cmdCpDir), ("mkdir", cmdMkDir),
   ("rmdir", cmdRmDir), ("ls", cmdLs), ("pwd", cmdPwd), ("cd", cmdCd), ("cat", cmdCat),
-  ("hexdump", cmdHexDump), ("chmod", cmdChmod)]
+  ("hexdump", cmdHexDump)]
 
 cmdEcho :: Command
 cmdEcho ss (ScriptState _ wd vars) = return $ ScriptState (concat ss) wd vars
@@ -153,15 +152,6 @@ bToHex = L.intercalate "  "
 
 sshowHex :: (Show a, Integral a) => a -> String
 sshowHex n = showHex n ""
-
-cmdChmod :: Command
-cmdChmod args scst@(ScriptState _ wd vars) = do
-  pass <- checkArgs args 2
-  if pass then do
-    setFileMode (head args) (last args)
-    return $ scst{output = hex}
-  else return $ scst{output = "Failure!"}
-
 
 checkArgs :: [String] -> Int -> IO Bool
 checkArgs xs n =

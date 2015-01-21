@@ -1,6 +1,6 @@
 -- The top-level module. Connects parsing to execution and adds interaction
 -- with the user / reading from file.
-module Hash where
+module Hash (runScript, runInteractive) where
 
 import qualified Data.Map           as M
 import           Language.Commands
@@ -21,7 +21,7 @@ runScript file = do
       runHashProgram commands (Right scrState) es
       putStrLn "Execution finished"
   return ()
-  
+
 runScr :: FilePath -> ScriptState -> IO ScriptState
 runScr fName scrState = do
   script <- readFile fName
@@ -29,10 +29,7 @@ runScr fName scrState = do
     Left str -> do
       putStrLn "Syntax error in file!"
       return scrState
-    Right es -> do
-      ss <- runHashProgram commands (Right scrState) es
-      putStrLn "Execution finished"
-      return ss
+    Right es -> runHashProgram commands (Right scrState) es
 
 -- Communicates with the user and performs hash commands line by line
 runInteractive :: IO ()

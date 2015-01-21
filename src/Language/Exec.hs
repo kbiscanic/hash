@@ -1,7 +1,7 @@
 module Language.Exec where
 
 import qualified Data.Map             as M
-import Data.Maybe
+import           Data.Maybe
 import           Language.Expressions
 
 -- A model of a command which is waiting for arguments and a state to run
